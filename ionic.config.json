@@ -1,0 +1,8 @@
+{
+  "name": "MovieInfoApp",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular",
+  "id": "dc9029ca"
+}
