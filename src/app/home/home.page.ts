@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { DataService, Message } from '../services/data.service';
+import { DataService, Movie } from '../services/data.service';
+import { Observable } from 'rxjs';
+import { title } from 'process';
 
 @Component({
   selector: 'app-home',
@@ -7,7 +9,11 @@ import { DataService, Message } from '../services/data.service';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-  constructor(private data: DataService) {}
+  constructor(private data: DataService) { }
+
+  public movieList: Movie[];
+  results: Observable<any>;
+
 
   refresh(ev) {
     setTimeout(() => {
@@ -15,8 +21,25 @@ export class HomePage {
     }, 3000);
   }
 
-  getMessages(): Message[] {
-    return this.data.getMessages();
+  getMovies(): Movie[] {
+    return this.data.getMovies();
   }
 
+  filterList(evt) {
+    this.results = this.data.getMoviesByTitle(evt.srcElement.value);
+    this.results.subscribe(data => {
+      this.movieList = [];
+      for (let m of data['Search']) {
+        if(m["Type"] === "movie"){
+          let movie: Movie =
+        {
+          title: m["Title"],
+          date: m["Year"],
+          id: m["imdbID"],
+        }
+        this.movieList.push(movie);
+        }
+      }
+    });
+  }
 }
