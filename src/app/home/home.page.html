@@ -1,28 +1,40 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
+  <ion-toolbar color="dark">
     <ion-title>
       Movies
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" class="ion-padding">
   <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
   <ion-header collapse="condense">
-    <ion-toolbar>
+    <ion-toolbar color="dark">
       <ion-title size="large">
         Movies
       </ion-title>
     </ion-toolbar>
   </ion-header>
 
+  <div *ngIf="empty == true">
+    <ion-text>
+      <h1>Introduce a movie title!</h1>
+    </ion-text>
+  </div>
+
   <ion-searchbar (ionInput)='filterList($event)'></ion-searchbar>
 
   <ion-list>
     <app-movie *ngFor="let movie of movieList" [movie]="movie"></app-movie>
-  </ion-list> 
+  </ion-list>
+
+  <div *ngIf="empty == false" class="ion-text-center">
+    <ion-text color="danger">
+      <h1>{{errorMessage}}</h1>
+    </ion-text>
+  </div>
 
 </ion-content>

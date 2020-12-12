@@ -13,6 +13,8 @@ export class HomePage {
 
   public movieList: Movie[];
   results: Observable<any>;
+  public empty: boolean = true; 
+  public errorMessage: string;
 
 
   refresh(ev) {
@@ -26,20 +28,32 @@ export class HomePage {
   }
 
   filterList(evt) {
-    this.results = this.data.getMoviesByTitle(evt.srcElement.value);
-    this.results.subscribe(data => {
-      this.movieList = [];
-      for (let m of data['Search']) {
-        if(m["Type"] === "movie"){
-          let movie: Movie =
-        {
-          title: m["Title"],
-          date: m["Year"],
-          id: m["imdbID"],
+    if (evt !== "") {
+      this.results = this.data.getMoviesByTitle(evt.srcElement.value);
+      this.results.subscribe(data => {
+        this.movieList = [];
+        if(data['Response'] === 'True'){
+          for (var m of data['Search']) {
+            if (m["Type"] === "movie") {
+              let movie: Movie =
+              {
+                title: m["Title"],
+                date: m["Year"],
+                id: m["imdbID"],
+              }
+              this.movieList.push(movie);
+            }
+            this.errorMessage = '';
+          }
+        }else{
+          if(data['Error'] == "Incorrect IMDb ID."){
+            this.empty = true;
+          }else{
+            this.errorMessage = data['Error'];
+            this.empty = false;
+          }
         }
-        this.movieList.push(movie);
-        }
-      }
-    });
+      });;
+    }
   }
 }

@@ -28,9 +28,12 @@ export class ViewMoviePage implements OnInit {
         date: data["Year"],
         id: data["imdbID"],
         runtime: data["Runtime"],
-        poster: data["Poster"]
+        poster: data["Poster"],
+        director: data["Director"],
+        country: data["Country"],
+        language: data["Language"],
+        actors: data["Actors"]
       }
-      console.log(m.title + ";" + m.plot);
       this.movie = m;
     });
   }

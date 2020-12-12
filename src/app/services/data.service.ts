@@ -15,6 +15,10 @@ export interface DetailedMovieInfo{
   id: string;
   runtime: string;
   poster: string;
+  director: string,
+  country: string
+  language: string,
+  actors: string
 }
 
 @Injectable({
@@ -33,7 +37,7 @@ export class DataService {
   }
 
   public getMovieById(id: string): Observable<any> {
-    return this.http.get(`${this.url}?i=${id}&apikey=${this.apiKey}`);
+    return this.http.get(`${this.url}?i=${id}&apikey=${this.apiKey}&plot=full`);
   }
 
   public getMoviesByTitle(title: string): Observable<any> {

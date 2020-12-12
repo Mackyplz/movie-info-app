@@ -1,20 +1,39 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
+  <ion-toolbar color="dark">
     <ion-buttons>
       <ion-back-button [text]="getBackButtonText()" defaultHref="/"></ion-back-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" *ngIf="movie">
   <ion-card>
-    <ion-card-header>
-      <ion-card-subtitle>{{ movie.date }}</ion-card-subtitle>
-      <ion-card-title>{{ movie.title }}</ion-card-title>
-    </ion-card-header>
-  
-    <ion-card-content>
-      {{movie.plot}}
-    </ion-card-content>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="auto">
+          <div>
+            <img src="{{ movie.poster }}" alt="ion"/>
+          </div>
+        </ion-col>
+        <ion-col>
+          <div>
+            <ion-card-header>
+              <ion-card-subtitle>{{ movie.date }}</ion-card-subtitle>
+              <ion-card-title>{{ movie.title }}</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <p><b>Director:</b> {{movie.director}}</p>
+              <p><b>Country:</b> {{movie.country}}</p>
+              <p><b>Language:</b> {{movie.language}}</p>
+              <p><b>Cast:</b> {{movie.actors}}</p>
+              <ion-row style="height: 20px"></ion-row>
+              <p>{{movie.plot}}</p>
+            </ion-card-content>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    
   </ion-card>
 </ion-content>
